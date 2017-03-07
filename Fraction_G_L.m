@@ -3,20 +3,20 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
 %   Detailed explanation goes here
 
     if numel(size(org_pic))>2
-       I = rgb2gray(org_pic);%»Ò¶È×ª»»
+       I = rgb2gray(org_pic);%ç°åº¦è½¬æ¢
     else
         I=org_pic;
     end
-    I = double(I);%×ª»¯ÎªË«¾«¶È
-    [H,W] = size(I);%»ñÈ¡Í¼Ïñ´óĞ¡
+    I = double(I);%è½¬åŒ–ä¸ºåŒç²¾åº¦
+    [H,W] = size(I);%è·å–å›¾åƒå¤§å°
 
-    %%  Step1£ºÊ¹ÓÃ¸ßË¹ÂË²¨Æ½»¬Í¼Ïñ
+    %%  Step1ï¼šä½¿ç”¨é«˜æ–¯æ»¤æ³¢å¹³æ»‘å›¾åƒ
 
-    B = [1 2 1;2 4 2;1 2 1];%¸ßË¹ÂË²¨ÏµÊı
-    B = 1/16.*B;%¸ßË¹ÂË²¨Ä£°å ·½²î=0.8
-    A = conv2(I,B,'same');%Ê¹ÓÃ¸ßË¹Ä£°å½øĞĞ¾í»ı.¼ÆËã¶şÎ¬¾í»ı,½á¹ûÓëÔ­Í¼Ïñ´óĞ¡ÏàÍ¬ 
+    B = [1 2 1;2 4 2;1 2 1];%é«˜æ–¯æ»¤æ³¢ç³»æ•°
+    B = 1/16.*B;%é«˜æ–¯æ»¤æ³¢æ¨¡æ¿ æ–¹å·®=0.8
+    A = conv2(I,B,'same');%ä½¿ç”¨é«˜æ–¯æ¨¡æ¿è¿›è¡Œå·ç§¯.è®¡ç®—äºŒç»´å·ç§¯,ç»“æœä¸åŸå›¾åƒå¤§å°ç›¸åŒ 
 
-    %%  Step2£º¹¹ÔìÑÚÄ¤ ¾í»ı
+    %%  Step2ï¼šæ„é€ æ©è†œ å·ç§¯
     a0=1;
     a1=-v;
     a2=-v*(-v+1)/2;
@@ -28,11 +28,11 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
         0  a1 a1  a1 0;
         a2 0 a2 0 a2;
           ];
-      mask=mask/(4*v*v-12*v+8);%¹éÒ»»¯
+      mask=mask/(4*v*v-12*v+8);%å½’ä¸€åŒ–
 
     %  b = abs(conv2(A,mask,'same')); 
     b = abs(filter2(mask,A,'same')); 
-    %%  Step3£ºÌİ¶ÈµÄ·ùÖµÍ¼Ïñ
+    %%  Step3ï¼šæ¢¯åº¦çš„å¹…å€¼å›¾åƒ
 
     b=abs(b-A);
     for i=1:H
@@ -45,7 +45,7 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
             end
         end
     end
-    %¹éÒ»»¯Í¼Ïñ
+    %å½’ä¸€åŒ–å›¾åƒ
     min_count=min(min(b));
     max_count=max(max(b));
     for i=1:H
@@ -71,8 +71,8 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
 %     temp=b;
 %     [m,n]=size(temp);
 %     [fx,fy]=gradient(temp);
-%     a = atan2(fy,fx);%»ñÈ¡»¡¶È£¬·¶Î§£º-pi~pi
-%     a = a*180/pi;%½«»¡¶È×ª»»Îª½Ç¶È£¬µÃµ½½Ç¶ÈÍ¼Ïñ£¬ÓëÔ­Í¼Ïñ´óĞ¡ÏàµÈ.
+%     a = atan2(fy,fx);%è·å–å¼§åº¦ï¼ŒèŒƒå›´ï¼š-pi~pi
+%     a = a*180/pi;%å°†å¼§åº¦è½¬æ¢ä¸ºè§’åº¦ï¼Œå¾—åˆ°è§’åº¦å›¾åƒï¼Œä¸åŸå›¾åƒå¤§å°ç›¸ç­‰.
 %     for i = 1:m
 %         for j = 1:n
 %             if((a(i,j) >= -22.5) && (a(i,j) < 0)||(a(i,j) >= 0) && (a(i,j) < 22.5) || (a(i,j) <= -157.5) && (a(i,j) >= -180)||(a(i,j) >= 157.5)&&(a(i,j) <= 180))
@@ -86,7 +86,7 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
 %             end
 %         end
 %     end
-%     Nms = zeros(m,n);%¶¨ÒåÒ»¸ö·Ç¼«´óÖµÍ¼Ïñ
+%     Nms = zeros(m,n);%å®šä¹‰ä¸€ä¸ªéæå¤§å€¼å›¾åƒ
 %     for i = 2:m-1
 %         for j= 2:n-1
 %             if (a(i,j) == 0 && temp(i,j) == max([temp(i,j), temp(i,j+1), temp(i,j-1)]))
@@ -100,22 +100,22 @@ function [ output_pic ] = Fraction_G_L( org_pic,v)
 %             end;
 %         end;
 %     end;
-%     DT = zeros(m,n);%¶¨ÒåÒ»¸öË«ãĞÖµÍ¼Ïñ
-%     TL = 0.06 * max(max(Nms));%µÍãĞÖµ
-%     TH = 0.15 * max(max(Nms));%¸ßãĞÖµ
+%     DT = zeros(m,n);%å®šä¹‰ä¸€ä¸ªåŒé˜ˆå€¼å›¾åƒ
+%     TL = 0.06 * max(max(Nms));%ä½é˜ˆå€¼
+%     TH = 0.15 * max(max(Nms));%é«˜é˜ˆå€¼
 %     for i = 1  : m
 %         for j = 1 : n
 %             if (Nms(i, j) < TL)
 %                 DT(i,j) = 0;
 %             elseif (Nms(i, j) > TH)
 %                 DT(i,j) = 1 ;
-%             %¶ÔTL < Nms(i, j) < TH Ê¹ÓÃ8Á¬Í¨ÇøÓòÈ·¶¨
+%             %å¯¹TL < Nms(i, j) < TH ä½¿ç”¨8è¿é€šåŒºåŸŸç¡®å®š
 %             elseif ( Nms(i+1,j) > TH || Nms(i-1,j) > TH || Nms(i,j+1) > TH || Nms(i,j-1) > TH || Nms(i-1, j-1) > TH || Nms(i-1, j+1) > TH || Nms(i+1, j+1) > TH || Nms(i+1, j-1) > TH)
 %                 DT(i,j) = 1;
 %             end;
 %         end;
 %     end;
-%     figure, imshow(DT); %×îÖÕµÄ±ßÔµ¼ì²âÎª¶şÖµÍ¼Ïñ
+%     figure, imshow(DT); %æœ€ç»ˆçš„è¾¹ç¼˜æ£€æµ‹ä¸ºäºŒå€¼å›¾åƒ
 %     output_pic=DT;
     grid on;
     title('Tianis');

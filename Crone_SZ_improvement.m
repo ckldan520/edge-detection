@@ -2,20 +2,20 @@ function [ output_pic ] = Crone_SZ_improvement( org_pic,v )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
    if numel(size(org_pic))>2
-       I = rgb2gray(org_pic);%»Ò¶È×ª»»
+       I = rgb2gray(org_pic);%ç°åº¦è½¬æ¢
     else
        I =org_pic;
     end
-    I = double(I);%×ª»¯ÎªË«¾«¶È
-    [H,W] = size(I);%»ñÈ¡Í¼Ïñ´óÐ¡
+    I = double(I);%è½¬åŒ–ä¸ºåŒç²¾åº¦
+    [H,W] = size(I);%èŽ·å–å›¾åƒå¤§å°
 
-%%  Step1£ºÊ¹ÓÃ¸ßË¹ÂË²¨Æ½»¬Í¼Ïñ
+%%  Step1ï¼šä½¿ç”¨é«˜æ–¯æ»¤æ³¢å¹³æ»‘å›¾åƒ
 
-    B = [1 2 1;2 4 2;1 2 1];%¸ßË¹ÂË²¨ÏµÊý
-    B = 1/16.*B;%¸ßË¹ÂË²¨Ä£°å ·½²î=0.8
-    A = conv2(I,B,'same');%Ê¹ÓÃ¸ßË¹Ä£°å½øÐÐ¾í»ý.¼ÆËã¶þÎ¬¾í»ý,½á¹ûÓëÔ­Í¼Ïñ´óÐ¡ÏàÍ¬
+    B = [1 2 1;2 4 2;1 2 1];%é«˜æ–¯æ»¤æ³¢ç³»æ•°
+    B = 1/16.*B;%é«˜æ–¯æ»¤æ³¢æ¨¡æ¿ æ–¹å·®=0.8
+    A = conv2(I,B,'same');%ä½¿ç”¨é«˜æ–¯æ¨¡æ¿è¿›è¡Œå·ç§¯.è®¡ç®—äºŒç»´å·ç§¯,ç»“æžœä¸ŽåŽŸå›¾åƒå¤§å°ç›¸åŒ
 
-%%  Step2£º¼ÆËãÌÝ¶ÈµÄ·ùÖµÍ¼Ïñ
+%%  Step2ï¼šè®¡ç®—æ¢¯åº¦çš„å¹…å€¼å›¾åƒ
     a0=0;
     a1=(-1)*v;
     a2=v*(v-1)/2;
@@ -32,14 +32,14 @@ function [ output_pic ] = Crone_SZ_improvement( org_pic,v )
     -a2 -a3 -a4;
     ];
 
-    gs = conv2(A,S_mask,'same');%"S"Ä£°å¾í»ýÍ¼Ïñ
-    gz = conv2(A,Z_mask,'same');%"Z"Ä£°å¾í»ýÍ¼Ïñ
-    b=abs(gs)+abs(gz);%¶ÔS+ZÄ£°å½øÐÐÕûºÏ
+    gs = conv2(A,S_mask,'same');%"S"æ¨¡æ¿å·ç§¯å›¾åƒ
+    gz = conv2(A,Z_mask,'same');%"Z"æ¨¡æ¿å·ç§¯å›¾åƒ
+    b=abs(gs)+abs(gz);%å¯¹S+Zæ¨¡æ¿è¿›è¡Œæ•´åˆ
     
     
-    %%  Step3£ºãÐÖµ±ßÔµÌáÈ¡
+    %%  Step3ï¼šé˜ˆå€¼è¾¹ç¼˜æå–
     [m,n]=size(A);
-    %¹éÒ»»¯Í¼Ïñ
+    %å½’ä¸€åŒ–å›¾åƒ
     for i=1:m
         for j=1:n
             if (b(i,j)>255)
@@ -58,7 +58,7 @@ function [ output_pic ] = Crone_SZ_improvement( org_pic,v )
         end
     end
 
-    %ãÐÖµ
+    %é˜ˆå€¼
     level=graythresh(b);
     
     for i=1:m

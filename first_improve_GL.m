@@ -3,25 +3,25 @@ function [ output_pic ] = first_improve_GL( org_pic,v )
 %   Detailed explanation goes here
 
     if numel(size(org_pic))>2
-       I = rgb2gray(org_pic);%»Ò¶È×ª»»
+       I = rgb2gray(org_pic);%ç°åº¦è½¬æ¢
     else
         I =org_pic;
     end
-    I = double(I);%×ª»¯ÎªË«¾«¶È
-    [Height,Width] = size(I);%»ñÈ¡Í¼Ïñ´óĞ¡
+    I = double(I);%è½¬åŒ–ä¸ºåŒç²¾åº¦
+    [Height,Width] = size(I);%è·å–å›¾åƒå¤§å°
 
-    %%  Step1£ºÊ¹ÓÃ¸ßË¹ÂË²¨Æ½»¬Í¼Ïñ
+    %%  Step1ï¼šä½¿ç”¨é«˜æ–¯æ»¤æ³¢å¹³æ»‘å›¾åƒ
 
-    B = [1 2 1;2 4 2;1 2 1];%¸ßË¹ÂË²¨ÏµÊı
-    B = 1/16.*B;%¸ßË¹ÂË²¨Ä£°å ·½²î=0.8
-    A = conv2(I,B,'same');%Ê¹ÓÃ¸ßË¹Ä£°å½øĞĞ¾í»ı.¼ÆËã¶şÎ¬¾í»ı,½á¹ûÓëÔ­Í¼Ïñ´óĞ¡ÏàÍ¬ 
+    B = [1 2 1;2 4 2;1 2 1];%é«˜æ–¯æ»¤æ³¢ç³»æ•°
+    B = 1/16.*B;%é«˜æ–¯æ»¤æ³¢æ¨¡æ¿ æ–¹å·®=0.8
+    A = conv2(I,B,'same');%ä½¿ç”¨é«˜æ–¯æ¨¡æ¿è¿›è¡Œå·ç§¯.è®¡ç®—äºŒç»´å·ç§¯,ç»“æœä¸åŸå›¾åƒå¤§å°ç›¸åŒ 
 
 
-    %%  Step2£º¹¹ÔìÑÚÄ¤ ¾í»ı
+    %%  Step2ï¼šæ„é€ æ©è†œ å·ç§¯
     a0=1;
     a1=-v;
     a2=-v*(-v+1)/2;
-    a3=(4*v*v-12*v+8);%¹éÒ»»¯
+    a3=(4*v*v-12*v+8);%å½’ä¸€åŒ–
 
     mask_0=[
         0  0   0;
@@ -59,9 +59,9 @@ function [ output_pic ] = first_improve_GL( org_pic,v )
         0  0  a2;
         ];
 
-    temp_pic1 = A;%¶¨ÒåÒ»¸ö³õÊ¼Í¼Ïñ
-    temp_pic2 = A;%¶¨ÒåÒ»¸ö³õÊ¼Í¼Ïñ
-    temp_pic3 =A;%¶¨ÒåÒ»¸ö³õÊ¼Í¼Ïñ
+    temp_pic1 = A;%å®šä¹‰ä¸€ä¸ªåˆå§‹å›¾åƒ
+    temp_pic2 = A;%å®šä¹‰ä¸€ä¸ªåˆå§‹å›¾åƒ
+    temp_pic3 =A;%å®šä¹‰ä¸€ä¸ªåˆå§‹å›¾åƒ
 
 
 
@@ -75,18 +75,18 @@ for i=3:Height-2
         W(6)=A(i,j)+A(i+1,j-1)*a1+A(i+2,j-2)*a2;
         W(7)=A(i,j)+A(i+1,j)*a1+A(i+2,j)*a2;
         W(8)=A(i,j)+A(i+1,j+1)*a1+A(i+2,j+2)*a2;
-        %·½·¨Ò»    
+        %æ–¹æ³•ä¸€    
         impove_sum_W1=[(W(1)+W(3)+W(5)+W(7)),(W(2)+W(4)+W(6)+W(8))];
         temp_pic1(i,j)=max(impove_sum_W1)*2/a3;
-        %·½·¨¶ş
+        %æ–¹æ³•äºŒ
         impove_sum_W2=[(W(1)+W(5)),(W(2)+W(6)),(W(3)+W(7)),(W(4)+W(8))];
         temp_pic2(i,j)=max(impove_sum_W2)*4/a3;
-        %·½·¨Èı
+        %æ–¹æ³•ä¸‰
         temp_pic3(i,j)=max(W)*8/a3;
     end
 end
 
-%%   Step3£ºÌİ¶ÈµÄ·ùÖµÍ¼Ïñ
+%%   Step3ï¼šæ¢¯åº¦çš„å¹…å€¼å›¾åƒ
    
 
 %    b1=abs(temp_pic1-A);
@@ -157,8 +157,8 @@ end
     temp=b3;
     [m,n]=size(temp);
     [fx,fy]=gradient(temp);
-    a = atan2(fy,fx);%»ñÈ¡»¡¶È£¬·¶Î§£º-pi~pi
-    a = a*180/pi;%½«»¡¶È×ª»»Îª½Ç¶È£¬µÃµ½½Ç¶ÈÍ¼Ïñ£¬ÓëÔ­Í¼Ïñ´óĞ¡ÏàµÈ.
+    a = atan2(fy,fx);%è·å–å¼§åº¦ï¼ŒèŒƒå›´ï¼š-pi~pi
+    a = a*180/pi;%å°†å¼§åº¦è½¬æ¢ä¸ºè§’åº¦ï¼Œå¾—åˆ°è§’åº¦å›¾åƒï¼Œä¸åŸå›¾åƒå¤§å°ç›¸ç­‰.
     for i = 1:m
         for j = 1:n
             if((a(i,j) >= -22.5) && (a(i,j) < 0)||(a(i,j) >= 0) && (a(i,j) < 22.5) || (a(i,j) <= -157.5) && (a(i,j) >= -180)||(a(i,j) >= 157.5)&&(a(i,j) <= 180))
@@ -172,7 +172,7 @@ end
             end
         end
     end
-    Nms = zeros(m,n);%¶¨ÒåÒ»¸ö·Ç¼«´óÖµÍ¼Ïñ
+    Nms = zeros(m,n);%å®šä¹‰ä¸€ä¸ªéæå¤§å€¼å›¾åƒ
     for i = 2:m-1
         for j= 2:n-1
             if (a(i,j) == 0 && temp(i,j) == max([temp(i,j), temp(i,j+1), temp(i,j-1)]))
@@ -186,22 +186,22 @@ end
             end;
         end;
     end;
-    DT = zeros(m,n);%¶¨ÒåÒ»¸öË«ãĞÖµÍ¼Ïñ
-    TL = 0.06 * max(max(Nms));%µÍãĞÖµ
-    TH = 0.15 * max(max(Nms));%¸ßãĞÖµ
+    DT = zeros(m,n);%å®šä¹‰ä¸€ä¸ªåŒé˜ˆå€¼å›¾åƒ
+    TL = 0.06 * max(max(Nms));%ä½é˜ˆå€¼
+    TH = 0.15 * max(max(Nms));%é«˜é˜ˆå€¼
     for i = 1  : m
         for j = 1 : n
             if (Nms(i, j) < TL)
                 DT(i,j) = 0;
             elseif (Nms(i, j) > TH)
                 DT(i,j) = 1 ;
-            %¶ÔTL < Nms(i, j) < TH Ê¹ÓÃ8Á¬Í¨ÇøÓòÈ·¶¨
+            %å¯¹TL < Nms(i, j) < TH ä½¿ç”¨8è¿é€šåŒºåŸŸç¡®å®š
             elseif ( Nms(i+1,j) > TH || Nms(i-1,j) > TH || Nms(i,j+1) > TH || Nms(i,j-1) > TH || Nms(i-1, j-1) > TH || Nms(i-1, j+1) > TH || Nms(i+1, j+1) > TH || Nms(i+1, j-1) > TH)
                 DT(i,j) = 1;
             end;
         end;
     end;
-    figure, imshow(DT); %×îÖÕµÄ±ßÔµ¼ì²âÎª¶şÖµÍ¼Ïñ
+    figure, imshow(DT); %æœ€ç»ˆçš„è¾¹ç¼˜æ£€æµ‹ä¸ºäºŒå€¼å›¾åƒ
     output_pic=DT;
     grid on;
     title('improve-Tianis');

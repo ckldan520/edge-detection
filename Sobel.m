@@ -2,7 +2,7 @@ function [ output_pic ] = Sobel( org_pic )
 %SOBEL Summary of this function goes here
 %   Detailed explanation goes here
     if numel(size(org_pic))>2
-       A = rgb2gray(org_pic);%»Ò¶È×ª»»
+       A = rgb2gray(org_pic);%ç°åº¦è½¬æ¢
     else
         A =org_pic;
     end
@@ -10,30 +10,30 @@ function [ output_pic ] = Sobel( org_pic )
 
     figure,imshow(A);
 
-    %%  Step1£ºÊ¹ÓÃ¸ßË¹ÂË²¨Æ½»¬Í¼Ïñ
+    %%  Step1ï¼šä½¿ç”¨é«˜æ–¯æ»¤æ³¢å¹³æ»‘å›¾åƒ
 
-    B = [1 2 1;2 4 2;1 2 1];%¸ßË¹ÂË²¨ÏµÊý
-    B = 1/16.*B;%¸ßË¹ÂË²¨Ä£°å ·½²î=0.8
-    A = conv2(A,B,'same');%Ê¹ÓÃ¸ßË¹Ä£°å½øÐÐ¾í»ý.¼ÆËã¶þÎ¬¾í»ý,½á¹ûÓëÔ­Í¼Ïñ´óÐ¡ÏàÍ¬ 
+    B = [1 2 1;2 4 2;1 2 1];%é«˜æ–¯æ»¤æ³¢ç³»æ•°
+    B = 1/16.*B;%é«˜æ–¯æ»¤æ³¢æ¨¡æ¿ æ–¹å·®=0.8
+    A = conv2(A,B,'same');%ä½¿ç”¨é«˜æ–¯æ¨¡æ¿è¿›è¡Œå·ç§¯.è®¡ç®—äºŒç»´å·ç§¯,ç»“æžœä¸ŽåŽŸå›¾åƒå¤§å°ç›¸åŒ 
 
 
-    %%  Step2£º¹¹ÔìÑÚÄ¤ ¾í»ý
+    %%  Step2ï¼šæž„é€ æŽ©è†œ å·ç§¯
 
     kx=1;
     ky=1;
-    %¶¨ÒåÂË²¨Æ÷
+    %å®šä¹‰æ»¤æ³¢å™¨
     op= [-1 -2 -1;0 0 0;1 2 1]/8;
     y_mask=op;
     x_mask=op';
-    %ÓÃÂË²¨Æ÷ÓëÍ¼Ïñ¾í»ý£¬ÇóµÃË®Æ½ºÍÊúÖ±·½ÏòµÄÍ¼Æ¬
+    %ç”¨æ»¤æ³¢å™¨ä¸Žå›¾åƒå·ç§¯ï¼Œæ±‚å¾—æ°´å¹³å’Œç«–ç›´æ–¹å‘çš„å›¾ç‰‡
     bx = abs(filter2(x_mask,A,'same')); 
     by = abs(filter2(y_mask,A,'same'));
 
     b = kx*bx.*bx + ky*by.*by;
 
-    %%  Step3£º¼ÆËãÌÝ¶ÈµÄ·ùÖµÍ¼Ïñ,½Ç¶ÈÍ¼Ïñ.
+    %%  Step3ï¼šè®¡ç®—æ¢¯åº¦çš„å¹…å€¼å›¾åƒ,è§’åº¦å›¾åƒ.
     [m,n]=size(A);
-    %¹éÒ»»¯Í¼Ïñ
+    %å½’ä¸€åŒ–å›¾åƒ
     for i=1:m
         for j=1:n
             if (b(i,j)>255)
@@ -52,7 +52,7 @@ function [ output_pic ] = Sobel( org_pic )
         end
     end
 
-    %ãÐÖµ
+    %é˜ˆå€¼
     level=graythresh(b);
 
     for i=1:m
